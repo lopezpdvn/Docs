@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNet.Razor.Runtime.TagHelpers;
+﻿using Microsoft.AspNet.Razor.Runtime.TagHelpers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -11,7 +10,6 @@ namespace AuthoringTagHelpers.TagHelpers2
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var childContent = await context.GetChildContentAsync();
-
 
             // Find Urls in the content and replace them with their anchor tag equivalent.
             output.Content.SetContent(Regex.Replace(
@@ -26,7 +24,6 @@ namespace AuthoringTagHelpers.TagHelpers2
     {
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-
             var childContent = await context.GetChildContentAsync();
             // Find Urls in the content and replace them with their anchor tag equivalent.
             output.Content.SetContent(Regex.Replace(
@@ -36,4 +33,3 @@ namespace AuthoringTagHelpers.TagHelpers2
         }
     }
 }
-

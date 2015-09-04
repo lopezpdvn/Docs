@@ -3,7 +3,7 @@ Authoring Tag Helpers
 
 By `Rick Anderson`_
 
-    - `Getting started with Tag Helpers`_
+    - `Getting started with Tag Helpers`_ 
     - `Starting the email Tag Helper`_
     - `A working email Tag Helper`_
     - `The bold Tag Helper`_
@@ -21,10 +21,10 @@ Getting started with Tag Helpers
 
 This tutorial provides an introduction to programming Tag Helpers. :doc:`intro` describes the benefits that Tag Helpers provide.
 
-A tag helper is any class that implements the `ITagHelper <https://github.com/aspnet/Razor/blob/dev/src/Microsoft.AspNet.Razor.Runtime/TagHelpers/ITagHelper.cs>`__ interface. However, when you author a tag helper, you generally derive from `TagHelper <https://github.com/aspnet/Razor/blob/dev/src/Microsoft.AspNet.Razor.Runtime/TagHelpers/TagHelper.cs>`__, doing so gives you access to the ``Process`` method. We will introduce the ``TagHelper`` methods and properties as we use them in this tutorial.
+A tag helper is any class that implements the `ITagHelper <https://github.com/aspnet/Razor/blob/dev/src/Microsoft.AspNet.Razor.Runtime/TagHelpers/ITagHelper.cs>`__ interface. However, when you author a tag helper, you generally derive from `TagHelper <https://github.com/aspnet/Razor/blob/dev/src/Microsoft.AspNet.Razor.Runtime/TagHelpers/TagHelper.cs>`__, doing so gives you access to the ``Process`` method. We will introduce the ``TagHelper`` methods and properties as we use them in this tutorial. 
 
 #. Create a new ASP.NET MVC 6 project called **AuthoringTagHelpers**. You won't need authentication for this project.
-#. Create a folder to hold the Tag Helpers called *TagHelpers*. The *TagHelpers* folder is not required, but it is a reasonable convention. Now let's get started writing some simple tag helpers.
+#. Create a folder to hold the Tag Helpers called *TagHelpers*. The *TagHelpers* folder is *not* required, but it is a reasonable convention. Now let's get started writing some simple tag helpers.
 
 Starting the email Tag Helper
 --------------------------------
@@ -45,7 +45,6 @@ That is, an anchor tag that makes this an email link. You might want to do this 
 
 .. literalinclude:: authoring/sample/TagHlp/src/AuthoringTagHelpers/TagHelpers/z1EmailTagHelperCopy.cs
    :language: c#
-   :lines: 2-14
    
 Notes: 
 
@@ -90,11 +89,11 @@ A working email Tag Helper
 ----------------------------------
 In this section, we will update the ``EmailTagHelper`` so that it will create a valid anchor tag for email. We'll update our tag helper to take information from a Razor view (in the form of a ``mail-to`` attribute) and use that in generating the anchor.
 
-Update the ``EmailTagHelper`` class with the following code:
+Update the ``EmailTagHelper`` class with the following:
 
 .. literalinclude:: authoring/sample/TagHlp/src/AuthoringTagHelpers/TagHelpers/EmailTagHelperMailTo.cs
    :lines: 5-24
-   :dedent: 3
+   :dedent: 3 
 
 Notes:
 
@@ -104,14 +103,13 @@ Notes:
 .. literalinclude:: authoring/sample/TagHlp/src/AuthoringTagHelpers/TagHelpers/EmailTagHelperMailTo.cs
    :lines: 7-24
    :dedent: 3
-   :emphasize-lines: 15
-
+   :emphasize-lines: 15 
 
 3. Update the markup in the *Views/Home/Contact.cshtml* file with these changes:
 
 .. literalinclude::  authoring/sample/TagHlp/src/AuthoringTagHelpers/Views/Home/ContactCopy.cshtml
    :language: aspx-cs
-   :emphasize-lines: 15-16
+   :emphasize-lines: 15-16 
    :lines: 1-17
  
 4. Run the app and verify that it generates the correct links.
@@ -148,7 +146,6 @@ That approach works for the attribute "href" as long as it doesn't currently exi
 
 2. Run the app and verify that it generates a valid email link.
     
-
 The bold Tag Helper
 ---------------------------
 
@@ -157,7 +154,7 @@ The bold Tag Helper
 .. literalinclude:: authoring/sample/TagHlp/src/AuthoringTagHelpers/TagHelpers/BoldTagHelper.cs
     :language: c#
 
-Notes:
+Notes: 
 
 - The ``[TargetElement]`` attribute passes an attribute parameter that specifies that any HTML element that contains an HTML attribute value of "bold" will match, and the ``Process`` override method in the class will run. In our sample, the ``Process``  method removes the "bold" attribute value and surrounds the containing markup with ``<strong></strong>``.
 -  Because we don't want to replace the existing tag content, we must write the opening tag with the ``PreContent.SetContent`` method and the closing tag with the ``PostContent.SetContent`` method.
@@ -166,9 +163,8 @@ Notes:
 
 .. literalinclude::  authoring/sample/TagHlp/src/AuthoringTagHelpers/Views/Home/About.cshtml
    :language: aspx-cs
-   :emphasize-lines: 7-11 
-   :lines: 1-11   
-
+   :lines: 1-11 
+   :emphasize-lines: 7-11  
       
 3. Update the *Views/_ViewImports.cshtml* file to use the wildcard syntax we previously mentioned. That way, we won't have to update our file when we add new tag helpers.
 
@@ -275,13 +271,13 @@ The condition tag helper renders output when passed a true value.
 
 .. literalinclude::  authoring/sample/TagHlp/src/AuthoringTagHelpers/Views/Home/Index.cshtml
    :language: aspx-cs
-   :lines: 1-13
 
 3. Replace the ``Index`` method in the ``Home`` controller with the following code:
 
 .. literalinclude:: authoring/sample/TagHlp/src/AuthoringTagHelpers/Controllers/HomeController.cs
    :language: c#
    :lines: 9-18
+   :dedent: 6
    
 4. Run the app and browse to the home page. The markup in the conditional ``div`` will not be rendered. Append  the query string ``?approved=true`` to the URL (for example, http://localhost:1235/Home/Index?approved=true). The approved is set to true and the conditional markup will be displayed.
 
@@ -299,13 +295,14 @@ ______________________________
 
 In this section, we will write a pair of auto-linking tag helpers. The first will replace markup containing a URL starting with HTTP to an HTML anchor tag containing the same URL (and thus yielding a link to the URL). The second will do the same for a URL starting with WWW.
 
-Because these two helpers are closely related and we may refactor them in the future, we'll keep them in the same file. 
+Because these two helpers are closely related and we may refactor them in the future, we'll keep them in the same file.
 
-#. Add the following ``AutoLinker`` class to the *TagHelpers* folder.
+#. Add the following ``AutoLinker`` class to the *TagHelpers* folder. 
 
 .. literalinclude:: authoring/sample/TagHlp/src/AuthoringTagHelpers/TagHelpers/z1AutoLinker.cs
    :language: c#
-   :lines: 2-22
+   :lines: 7-20
+   :dedent: 3
 
 Notes: The ``AutoLinkerHttpTagHelper`` class targets ``p`` elements and uses `Regex <https://msdn.microsoft.com/en-us/library/system.text.regularexpressions.regex.aspx>`__ to create the anchor.
 
@@ -314,7 +311,7 @@ Notes: The ``AutoLinkerHttpTagHelper`` class targets ``p`` elements and uses `Re
 
 .. literalinclude::  authoring/sample/TagHlp/src/AuthoringTagHelpers/Views/Home/Contact.cshtml
    :language: aspx-cs
-   :lines: 1-20
+   :lines: 1-20 
    :emphasize-lines: 20
 
 3. Run the app and verify that the tag helper renders the anchor correctly.
@@ -323,8 +320,8 @@ Notes: The ``AutoLinkerHttpTagHelper`` class targets ``p`` elements and uses `Re
 
 .. literalinclude:: authoring/sample/TagHlp/src/AuthoringTagHelpers/TagHelpers/z1AutoLinker.cs
    :language: c#
-   :lines: 2-39
-   :emphasize-lines: 23-38
+   :lines: 7-38
+   :emphasize-lines: 16-38
    
 5. Run the app. Notice the www text is rendered as a link but the HTTP text is not. If you put a break point in both classes, you can see that the HTTP tag helper class runs first. Later in the tutorial we'll see how to control the order that tag helpers run in. The problem is that the tag helper output is cached, and when the WWW tag helper is run, it overwrites the cached output from the HTTP tag helper. We'll fix that with the following code:
 
@@ -384,4 +381,4 @@ Additional Resources
 ----------------------
  
 - `TagHelperSamples on GitHub <https://github.com/dpaquette/TagHelperSamples>`__ contains tag helper samples for working with `Bootstrap <http://getbootstrap.com/>`__. 
-- `Channel 9 video on advanced tag helpers <https://channel9.msdn.com/Shows/Web+Camps+TV/Update-on-TagHelpers-with-Taylor-Mullen>`_ This is a great video on more advanced features. It's a couple versions out of date but the comments contain a list of changes to the current version.
+- `Channel 9 video on advanced tag helpers <https://channel9.msdn.com/Shows/Web+Camps+TV/Update-on-TagHelpers-with-Taylor-Mullen>`_ This is a great video on more advanced features. It's a couple versions out of date but the comments contain a list of changes to the current version and the updated code can be found `here <https://github.com/NTaylorMullen/WebCampsTV_TagHelpers1>`__.

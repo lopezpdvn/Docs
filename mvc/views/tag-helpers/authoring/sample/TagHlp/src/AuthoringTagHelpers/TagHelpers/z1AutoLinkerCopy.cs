@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNet.Razor.Runtime.TagHelpers;
+﻿using Microsoft.AspNet.Razor.Runtime.TagHelpers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 

@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNet.Razor.Runtime.TagHelpers;
+﻿using Microsoft.AspNet.Razor.Runtime.TagHelpers;
 using System.Threading.Tasks;
 
 namespace AuthoringTagHelpers.TagHelpers
@@ -12,4 +11,3 @@ namespace AuthoringTagHelpers.TagHelpers
         }
     }
 }
-
