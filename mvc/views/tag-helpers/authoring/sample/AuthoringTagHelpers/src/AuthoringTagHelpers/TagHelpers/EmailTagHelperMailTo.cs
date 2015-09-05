@@ -1,11 +1,9 @@
-﻿
-using Microsoft.AspNet.Razor.Runtime.TagHelpers;
+﻿using Microsoft.AspNet.Razor.Runtime.TagHelpers;
 using System.Threading.Tasks;
 
-namespace AuthoringTagHelpers.TagHelpers21
+namespace AuthoringTagHelpers.TagHelpers2
 {
-    [TargetElement("email",TagStructure = TagStructure.WithoutEndTag)] 
-    public class EmailVoidTagHelper : TagHelper
+    public class EmailTagHelper : TagHelper
     {
         private const string EmailDomain = "contoso.com";
 

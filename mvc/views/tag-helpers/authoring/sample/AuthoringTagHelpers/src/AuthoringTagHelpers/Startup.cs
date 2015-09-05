@@ -13,7 +13,7 @@ using Microsoft.Framework.Logging;
 using Microsoft.Framework.Logging.Console;
 using Microsoft.Dnx.Runtime;
 
-namespace TagHlp
+namespace AuthoringTagHelpers
 {
     public class Startup
     {

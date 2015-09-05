@@ -5,7 +5,7 @@ namespace AuthoringTagHelpers.TagHelpers3
 {
     public class EmailTagHelper : TagHelper
     {
-        public static string EmailDomain = "contoso.com";
+        private const string EmailDomain = "contoso.com";
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "a";    // Replaces <email> with <a> tag
@@ -16,4 +16,3 @@ namespace AuthoringTagHelpers.TagHelpers3
         }
     }
 }
-
