@@ -19,7 +19,7 @@ namespace AuthoringTagHelpers.TagHelpers2
     }
 
     [TargetElement("p")]
-    public class  AutoLinkerWwwTagHelper  : TagHelper
+    public class AutoLinkerWwwTagHelper : TagHelper
     {
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {

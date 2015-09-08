@@ -33,7 +33,9 @@ Starting the email Tag Helper
 
 In this section we will write a tag helper that updates an email tag. For example:
 
-``<email>Support</email>``
+.. code-block:: HTML
+
+	<email>Support</email>
 
 The server will use our email tag helper to convert that markup into the following:
 
@@ -62,9 +64,7 @@ That is, an anchor tag that makes this an email link. You might want to do this 
 
 	public class Email : TagHelper
 
-And even without the ``[TargetElement]`` attribute, ``<email>`` tags will be targeted.
-
-2. To make the ``EmailTagHelper`` class available to all our Razor views, we will add the ``addTagHelper`` command to the *Views/_ViewImports.cshtml* file:
+2. To make the ``EmailTagHelper`` class available to all our Razor views, we will add the ``addTagHelper`` directive to the *Views/_ViewImports.cshtml* file:
 
 .. wildcard syntax
 
@@ -72,7 +72,7 @@ And even without the ``[TargetElement]`` attribute, ``<email>`` tags will be tar
    :language: aspx-cs
    :emphasize-lines: 2,3
 
-The code above uses the wildcard syntax to specify all the tag helpers in our DLL will be available. The first string after ``@addTagHelper`` specifies the tag helper to load (we are using "\*" for all tag helpers), and the second string "AuthoringTagHelpers" specifies the DLL the tag helper is in. Also, note that the second line brings in the ASP.NET 5 MVC 6 tag helpers using the wildcard syntax (those helpers are discussed in :doc:`intro`.) It's the ``@addTagHelper`` command that makes the tag helper available to the Razor view. Alternatively, you can provide the fully qualified name (FQN) of a tag helper as shown below:
+The code above uses the wildcard syntax to specify all the tag helpers in our assembly will be available. The first string after ``@addTagHelper`` specifies the tag helper to load (we are using "\*" for all tag helpers), and the second string "AuthoringTagHelpers" specifies the assembly the tag helper is in. Also, note that the second line brings in the ASP.NET 5 MVC 6 tag helpers using the wildcard syntax (those helpers are discussed in :doc:`intro`.) It's the ``@addTagHelper`` directive that makes the tag helper available to the Razor view. Alternatively, you can provide the fully qualified name (FQN) of a tag helper as shown below:
 
 .. FQN syntax
 
@@ -81,7 +81,7 @@ The code above uses the wildcard syntax to specify all the tag helpers in our DL
    :lines: 1-3
    :emphasize-lines: 3
 
-To add a tag helper to a view using a FQN, you first add the FQN (``AuthoringTagHelpers.TagHelpers.EmailTagHelper``), and then the DLL name (*AuthoringTagHelpers*). Most developers will prefer to use the wildcard syntax. :doc:`using` goes into detail on tag helper adding, removing, hierarchy, and wildcard syntax. 
+To add a tag helper to a view using a FQN, you first add the FQN (``AuthoringTagHelpers.TagHelpers.EmailTagHelper``), and then the assembly name (*AuthoringTagHelpers*). Most developers will prefer to use the wildcard syntax. :doc:`using` goes into detail on tag helper adding, removing, hierarchy, and wildcard syntax. 
 
 3. Update the markup in the *Views/Home/Contact.cshtml* file with these changes:
 
@@ -90,7 +90,7 @@ To add a tag helper to a view using a FQN, you first add the FQN (``AuthoringTag
    :emphasize-lines: 15-16
    :lines: 1-17
    
-4. Run the app and use your favorite browser to view the HTML source so you can verify that the email tag is replaced with anchor markup (``<a>Support</a>``). Support is rendered as a link, but it doesn't have an ``href`` attribute to make it functional. We'll fix that in the next section.
+4. Run the app and use your favorite browser to view the HTML source so you can verify that the email tags are replaced with anchor markup (For example, ``<a>Support</a>``). *Support* and *Marketing* are rendered as a links, but they don't have an ``href`` attribute to make them functional. We'll fix that in the next section.
 
 **Note:** Like `HTML tags and attributes <http://www.w3.org/TR/html-markup/documents.html#case-insensitivity>`__, tags, class names and attributes in Razor, and C# are not case-sensitive.
 
@@ -103,6 +103,7 @@ Update the ``EmailTagHelper`` class with the following:
 .. literalinclude:: authoring/sample/AuthoringTagHelpers/src/AuthoringTagHelpers/TagHelpers/EmailTagHelperMailTo.cs
    :lines: 5-24
    :dedent: 4 
+   :language: c#
 
 **Notes:**
 
@@ -114,6 +115,7 @@ Update the ``EmailTagHelper`` class with the following:
    :lines: 14-21
    :dedent: 8
    :emphasize-lines: 6
+   :language: c#
    
 That approach works for the attribute "href" as long as it doesn't currently exist in the attributes collection. You can also use the ``output.Attributes.Add`` method to add a tag helper attribute to the end of the collection of tag attributes.
 
@@ -126,13 +128,14 @@ That approach works for the attribute "href" as long as it doesn't currently exi
  
 4. Run the app and verify that it generates the correct links.
 
-**Note:** If you were to write the email tag self-closing (``<email mail-to="Rick" />``), the final output would also be self-closing. To enable the ability to write the tag with only a start tag ( <email mail-to="Rick"> ) you must decorate the class with the following:
+**Note:** If you were to write the email tag self-closing (``<email mail-to="Rick" />``), the final output would also be self-closing. To enable the ability to write the tag with only a start tag ``<email mail-to="Rick" />``) you must decorate the class with the following:
 
 .. literalinclude:: authoring/sample/AuthoringTagHelpers/src/AuthoringTagHelpers/TagHelpers/EmailTagHelperMailVoid.cs
    :lines: 6
    :dedent: 4 
+   :language: c#
    
-In our example, the output would be ``<a href="mailto:Rick@contoso.com" />``. Self-closing anchor tags are not valid HTML, so you wouldn't want to create one, but you might want to create a tag helper that is self-closing. The ASP.NET 5 runtime sets the type of the ``TagMode`` property after reading a tag.
+With a self-closing email tag helper, the output would be ``<a href="mailto:Rick@contoso.com" />``. Self-closing anchor tags are not valid HTML, so you wouldn't want to create one, but you might want to create a tag helper that is self-closing. Tag helpers set the type of the ``TagMode`` property after reading a tag.
 
 .. In this section we will update the ``EmailTagHelper`` so that it gets the target ``mail-to`` from the content. Need to revert the contact.cshtml file back.
 
@@ -146,7 +149,8 @@ In this section we'll write an asynchronous email helper.
 .. literalinclude:: authoring/sample/AuthoringTagHelpers/src/AuthoringTagHelpers/TagHelpers/EmailTagHelper.cs
    :lines: 6-17
    :dedent: 4
-
+   :language: c#
+   
 **Notes:**
 
 - This version uses the asynchronous ``ProcessAsync`` method. The asynchronous ``GetChildContentAsync`` returns a ``Task`` containing the ``TagHelperContent``. 
@@ -159,7 +163,7 @@ In this section we'll write an asynchronous email helper.
    :emphasize-lines: 15-16 
    :lines: 1-17
 
-3. Run the app and verify that it generates a valid email link.
+3. Run the app and verify that it generates valid email links.
     
 The bold Tag Helper
 ---------------------------
@@ -225,7 +229,7 @@ Web site information Tag Helper
 
 **Notes:** 
 
-- As mentioned previously, the ASP.NET 5 runtime translates Pascal-cased C# class names and properties for tag helpers into `lower kebab case <http://c2.com/cgi/wiki?KebabCase>`__. Therefore, to use the ``WebsiteInformationTagHelper`` in Razor, you'll write ``<website-information />``.
+- As mentioned previously, tag helpers translates Pascal-cased C# class names and properties for tag helpers into `lower kebab case <http://c2.com/cgi/wiki?KebabCase>`__. Therefore, to use the ``WebsiteInformationTagHelper`` in Razor, you'll write ``<website-information />``.
 - We are not explicitly identifying the target element with the ``[TargetElement]`` attribute, so the default of ``website-information`` will be targeted. If you applied the following attribute (note it's not kebab case but matches the class name):
 
 .. code-block:: c#
@@ -239,6 +243,11 @@ The lower kebab case tag ``<website-information />`` would not match. If you wan
 	    [TargetElement("Website-Information")]
 
 - Elements that are self-closing have no content. For this example, the Razor markup will use a self-closing tag, but the tag helper will be creating a `section <http://www.w3.org/TR/html5/sections.html#the-section-element>`__ element (which is not self-closing and we are writing content inside the ``section`` element). Therefore, we need to set ``TagMode`` to ``StartTagAndEndTag`` to write output. Alternatively, you can comment out the line setting ``TagMode`` and write markup with a closing tag. (Example markup is provided later in this tutorial.)
+- The ``$`` (dollar sign) in the following line uses an `interpolated string <https://msdn.microsoft.com/en-us/library/Dn961160.aspx>`__:
+
+.. code-block:: c#
+
+	$@"<ul><li><strong>Version:</strong> {Info.Version}</li>
 
 5. Add the following markup to the *About.cshtml* view. The highlighted markup displays the web site information.
 
@@ -286,7 +295,7 @@ The condition tag helper renders output when passed a true value.
    :language: c#
    :lines: 9-18
    :dedent: 6
-   
+
 4. Run the app and browse to the home page. The markup in the conditional ``div`` will not be rendered. Append the query string ``?approved=true`` to the URL (for example, http://localhost:1235/Home/Index?approved=true). The approved is set to true and the conditional markup will be displayed.
 
 **Note:** We use the `nameof <https://msdn.microsoft.com/en-us/library/dn986596.aspx>`_ operator to specify the attribute to target rather than specifying a string as we did with the bold tag helper:
@@ -294,7 +303,7 @@ The condition tag helper renders output when passed a true value.
 .. literalinclude:: authoring/sample/AuthoringTagHelpers/src/AuthoringTagHelpers/TagHelpers/zConditionTagHelperCopy.cs
     :language: c#
     :lines: 5-18
-    :emphasize-lines: 1,2,4
+    :emphasize-lines: 1,2,5
     :dedent: 3
    
 The `nameof <https://msdn.microsoft.com/en-us/library/dn986596.aspx>`_ operator will protect the code should it ever be refactored (we might want to change the name to RedCondition).
