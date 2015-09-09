@@ -253,7 +253,7 @@ The lower kebab case tag ``<website-information />`` would not match. If you wan
 
 .. literalinclude::  authoring/sample/AuthoringTagHelpers/src/AuthoringTagHelpers/Views/Home/About.cshtml
    :language: aspx-cs
-   :emphasize-lines: 1,13-20  
+   :emphasize-lines: 1,12-20  
    :lines: 1-20
 
 **Note:** In the Razor markup shown below:
